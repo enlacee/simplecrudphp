@@ -55,11 +55,11 @@ class LibroTable
 		$select->execute();
 		$libro = $select->fetch();
 		
-		$myLibro = new Libro();
+		$myLibro = new LibroModel();
 		$myLibro->setId( $libro['id'] );
 		$myLibro->setNombre( $libro['nombre'] );
 		$myLibro->setAutor( $libro['autor'] );
-		$myLibro->setAnio_edicion( $libro['anio_edicion'] );
+		$myLibro->setAnioEdicion( $libro['anio_edicion'] );
 		
 		return $myLibro;
 	}
@@ -67,12 +67,12 @@ class LibroTable
 	// método para actualizar un libro, recibe como parámetro el libro
 	public function actualizar( $libro )
 	{
-		$db=Db::conectar();
-		$actualizar = $db->prepare( 'UPDATE libros SET nombre=:nombre, autor=:autor,anio_edicion=:anio  WHERE ID=:id' );
+		$db = Db::conectar();
+		$actualizar = $db->prepare( 'UPDATE libros SET nombre=:nombre, autor=:autor,anio_edicion=:anio  WHERE id=:id' );
 		$actualizar->bindValue( 'id', $libro->getId() );
 		$actualizar->bindValue( 'nombre', $libro->getNombre() );
 		$actualizar->bindValue( 'autor', $libro->getAutor() );
-		$actualizar->bindValue( 'anio', $libro->getAnio_edicion() );
+		$actualizar->bindValue( 'anio', $libro->getAnioEdicion() );
 		$actualizar->execute();
 	}
 
