@@ -1,79 +1,60 @@
 <?php
-require_once 'Db.php';
 
 /**
  * Libro Model
  */
 class LibroModel
 {
-	public function __constructor()
-	{
+	private $id;
+	private $nombre;
+	private $autor;
+	private $anio_edicion;
 
+	public function __construct()
+	{
+		# code...
 	}
 
-	public function insertar($libro)
+	// GET
+	public function getId()
 	{
-		$db = Db::conectar();
-		$insert = $db->prepare( 'INSERT INTO libros values(NULL, :nombre, :autor, :anio_edicion)' );
-		$insert->bindValue('nombre', $libro->getNombre());
-		$insert->bindValue('autor', $libro->getAutor());
-		$insert->bindValue('anio_edicion', $libro->getAnioEdicion());
-		$insert->execute();
+		return $this->id;
 	}
 
-	public function mostrar()
+	public function getNombre()
 	{
-		$db = Db::conectar();
-		$listaLibros = [];
-		$select = $db->query('SELECT * FROM libros');
-
-		foreach ($select->fetchAll() as $libro) {
-			$myLibro = new LibroModel();
-			$myLibro->setId($libro['id']);
-			$myLibro->setNombre($libro['nombre']);
-			$myLibro->setAutor($libro['autor']);
-			$myLibro->setAnioEdicion($libro['anio_edicion']);
-			$listaLibros[] = $myLibro;
-		}
-
-		return $listaLibros;
+		return $this->nombre;
 	}
 
-	public function eliminar( $id )
+	public function getAutor()
 	{
-		$db = Db::conectar();
-		$eliminar = $db->prepare( 'DELETE FROM libros WHERE id=:id' );
-		$eliminar->bindValue( 'id', $id );
-		$eliminar->execute();
+		return $this->autor;
 	}
 
-	public function obtenerLibro( $id )
+	public function getAnioEdicion()
 	{
-		$db = Db::conectar();
-		$select = $db->prepare( 'SELECT * FROM libros WHERE ID=:id' );
-		$select->bindValue( 'id', $id );
-		$select->execute();
-		$libro = $select->fetch();
-		
-		$myLibro = new Libro();
-		$myLibro->setId( $libro['id'] );
-		$myLibro->setNombre( $libro['nombre'] );
-		$myLibro->setAutor( $libro['autor'] );
-		$myLibro->setAnio_edicion( $libro['anio_edicion'] );
-		
-		return $myLibro;
+		return $this->anio_edicion;
 	}
 
-	// método para actualizar un libro, recibe como parámetro el libro
-	public function actualizar( $libro )
+	// SET
+	public function setId( $id )
 	{
-		$db=Db::conectar();
-		$actualizar = $db->prepare( 'UPDATE libros SET nombre=:nombre, autor=:autor,anio_edicion=:anio  WHERE ID=:id' );
-		$actualizar->bindValue( 'id', $libro->getId() );
-		$actualizar->bindValue( 'nombre', $libro->getNombre() );
-		$actualizar->bindValue( 'autor', $libro->getAutor() );
-		$actualizar->bindValue( 'anio', $libro->getAnio_edicion() );
-		$actualizar->execute();
+		$this->id = $id;
+	}
+
+	public function setNombre( $nombre )
+	{
+		$this->nombre = $nombre;
+	}
+
+	public function setAutor( $autor )
+	{
+		$this->autor = $autor;
+	}
+
+	public function setAnioEdicion( $anioEdicion )
+	{
+		$this->anio_edicion = $anioEdicion;
 	}
 
 }

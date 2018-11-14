@@ -3,8 +3,8 @@
 require_once 'libroTable.php';
 require_once 'libroModel.php';
 
-$crud = new libroModel();
-$libro = new libroTable();
+$crud = new libroTable();
+$libro = new libroModel();
 
 if ( isset( $_POST['op'] ) === true ) {
 
